@@ -3,6 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const HomeScene: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -21,6 +22,10 @@ const HomeScene: React.FC = () => {
     camera.position.set(10, 5, -10);
     camera.lookAt(new THREE.Vector3(0, 0, 0));
 
+    const light = new THREE.AmbientLight(0x505050); 
+    light.intensity = 100;
+    scene.add(light);
+
     const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -28,11 +33,18 @@ const HomeScene: React.FC = () => {
     controls.target.set(0, 0, 0);
     controls.update();
 
-    const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
-    const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-    cube.position.set(0, 0.5, 0); 
-    scene.add(cube);
+    const loader = new GLTFLoader();
+
+    loader.load(
+      "planoEscena.glb",
+      function (gltf) {
+        scene.add(gltf.scene);
+      },
+      undefined,
+      function (error) {
+        console.error(error);
+      }
+    );
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -43,7 +55,7 @@ const HomeScene: React.FC = () => {
     animate();
   }, []);
 
-  return <canvas ref={canvasRef} />;
+  return <canvas ref={canvasRef}></canvas>;
 };
 
 export default HomeScene;
