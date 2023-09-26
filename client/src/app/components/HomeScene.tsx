@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import GltfModel from "./GltfModel";
 
 const HomeScene: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -33,19 +33,7 @@ const HomeScene: React.FC = () => {
     controls.target.set(0, 0, 0);
     controls.update(); */
 
-    const loader = new GLTFLoader();
-
-    loader.load(
-      "planoEscena.glb",
-      function (gltf) {
-        const plane = gltf.scene;
-        scene.add(plane);
-      },
-      undefined,
-      function (error) {
-        console.error(error);
-      }
-    );
+    GltfModel("planoEscena.glb", scene);
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -56,7 +44,11 @@ const HomeScene: React.FC = () => {
     animate();
   }, []);
 
-  return <canvas ref={canvasRef}></canvas>;
+  return (
+    <>
+      <canvas ref={canvasRef}></canvas>
+    </>
+  )
 };
 
 export default HomeScene;
