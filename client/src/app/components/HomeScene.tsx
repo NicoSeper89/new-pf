@@ -18,8 +18,8 @@ const HomeScene: React.FC = () => {
       0.1,
       1000
     );
-    camera.position.set(0, 1, 3);
-    camera.lookAt(new THREE.Vector3(0, 1.05, 0));
+    camera.position.set(-4, 4, 3);
+    camera.lookAt(new THREE.Vector3(-4.2, 4.1, 0));
 
     const light = new THREE.DirectionalLight(0x505050);
     light.position.set(0, 10, 10);
@@ -34,6 +34,7 @@ const HomeScene: React.FC = () => {
     controls.update(); */
 
     GltfModel("planoEscena.glb", scene);
+    GltfModel("portal.glb", scene, {x: 0, y: 0, z: -5});
 
     const animate = () => {
       requestAnimationFrame(animate);
