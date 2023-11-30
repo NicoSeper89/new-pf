@@ -2,7 +2,9 @@
 
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
-import { loadGLB } from "../utils/GltfModel"
+import { loadGLB } from "../utils/GltfModel";
+import { createStarsBackground } from "../components/StarsBackground";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const HomeScene: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -20,14 +22,30 @@ const HomeScene: React.FC = () => {
     camera.position.set(-9, 4, 16);
     camera.lookAt(new THREE.Vector3(4, 2, -27));
 
-    const envLight = new THREE.AmbientLight(new THREE.Color(23, 23, 23), 0.05);
-    scene.add(envLight);
+    const ambientLight = new THREE.AmbientLight(
+      new THREE.Color(23, 23, 23),
+      0.02
+    );
+    scene.add(ambientLight);
 
-    const light = new THREE.RectAreaLight(new THREE.Color(15, 15, 15), 5);
-    light.position.set(-20, 23, 20);
-    light.lookAt(new THREE.Vector3(0, 2, 0));
-    scene.add(light);
+    const roomLight = new THREE.PointLight(new THREE.Color(50, 50, 50), 2);
+    roomLight.position.set(1, 5, 1);
+    roomLight.lookAt(3, 0, 3);
 
+    scene.add(roomLight);
+
+    const texture = new THREE.TextureLoader().load("8k_stars.jpg");
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(3, 3); 
+
+    const geometry = new THREE.SphereGeometry(70, 64, 64);
+    const material = new THREE.MeshBasicMaterial({
+      map: texture,
+      side: THREE.BackSide,
+    });
+    const sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
 
     const renderer = new THREE.WebGLRenderer({
       canvas: canvasRef.current,
@@ -54,6 +72,11 @@ const HomeScene: React.FC = () => {
         console.error(error);
       });
 
+    const starsGroup = createStarsBackground(scene);
+
+    const controls = new OrbitControls(camera, canvasRef.current);
+    controls.update();
+
     window.addEventListener(
       "resize",
       () => {
@@ -68,13 +91,17 @@ const HomeScene: React.FC = () => {
 
     const animate = () => {
       requestAnimationFrame(animate);
-      if (model && mixer) {
+      if(!model || !mixer) return;
+      sphere.rotation.y -= 0.0001;
+      starsGroup.rotation.y -= 0.0004;
+      starsGroup.rotation.z -= 0.0006;
+      starsGroup.children.forEach(star => {
+        if (Math.random() > 0.995) {
+          star.visible = !star.visible;
+        }
+      })
+      renderer.render(scene, camera);
 
-        const deltaTime = clock.getDelta();
-        mixer.update(deltaTime);
-       /*  model.rotation.y += 0.005; */
-        renderer.render(scene, camera);
-      }
     };
 
     animate();

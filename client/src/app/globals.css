@@ -4,8 +4,8 @@
 
 :root {
   --foreground-hsla: 0, 0%, 100%, 1;
-  --background-start-hsla: 235.5, 100%, 8%, 1;
-  --background-end-hsla: 210.845, 100%, 28%, 1;
+  --background-start-hsla: 0, 100%, 0%, 1;
+  --background-end-hsla: 0, 100%, 0%, 1;
   --background-indoor-hsla: 0, 0%, 12%, 1;
 }
 
