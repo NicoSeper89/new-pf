@@ -5,6 +5,10 @@ import * as THREE from "three";
 import { loadGLB } from "../utils/GltfModel";
 import { createStarsBackground } from "../components/StarsBackground";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass";
 
 const HomeScene: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -24,11 +28,11 @@ const HomeScene: React.FC = () => {
 
     const ambientLight = new THREE.AmbientLight(
       new THREE.Color(23, 23, 23),
-      0.02
+      0.005
     );
     scene.add(ambientLight);
 
-    const roomLight = new THREE.PointLight(new THREE.Color(50, 50, 50), 2);
+    const roomLight = new THREE.PointLight(new THREE.Color(50, 50, 50), 0.2);
     roomLight.position.set(1, 5, 1);
     roomLight.lookAt(3, 0, 3);
 
@@ -37,7 +41,7 @@ const HomeScene: React.FC = () => {
     const texture = new THREE.TextureLoader().load("8k_stars.jpg");
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(3, 3); 
+    texture.repeat.set(3, 3);
 
     const geometry = new THREE.SphereGeometry(70, 64, 64);
     const material = new THREE.MeshBasicMaterial({
@@ -72,6 +76,23 @@ const HomeScene: React.FC = () => {
         console.error(error);
       });
 
+    const renderScene = new RenderPass(scene, camera);
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      0.2,
+      0,
+      0
+    );
+
+    renderer.toneMappingExposure = Math.pow(1, 4.0);
+
+    const outputPass = new OutputPass();
+
+    const composer = new EffectComposer(renderer);
+    composer.addPass(renderScene);
+    composer.addPass(bloomPass);
+    composer.addPass(outputPass);
+
     const starsGroup = createStarsBackground(scene);
 
     const controls = new OrbitControls(camera, canvasRef.current);
@@ -82,6 +103,7 @@ const HomeScene: React.FC = () => {
       () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
+        composer.setSize(window.innerWidth, window.innerHeight);
         renderer.setSize(window.innerWidth, window.innerHeight);
       },
       false
@@ -91,17 +113,20 @@ const HomeScene: React.FC = () => {
 
     const animate = () => {
       requestAnimationFrame(animate);
-      if(!model || !mixer) return;
+      if (!model || !mixer) return;
+
       sphere.rotation.y -= 0.0001;
       starsGroup.rotation.y -= 0.0004;
       starsGroup.rotation.z -= 0.0006;
-      starsGroup.children.forEach(star => {
+
+      mixer.update(clock.getDelta());
+
+      starsGroup.children.forEach((star) => {
         if (Math.random() > 0.995) {
           star.visible = !star.visible;
         }
-      })
-      renderer.render(scene, camera);
-
+      });
+      composer.render();
     };
 
     animate();
