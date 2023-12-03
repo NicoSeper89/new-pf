@@ -23,8 +23,8 @@ const HomeScene: React.FC = () => {
       1,
       1000
     );
-    camera.position.set(-9, 4, 16);
-    camera.lookAt(new THREE.Vector3(4, 2, -27));
+    camera.position.set(-8, 4, 16);
+    camera.lookAt(new THREE.Vector3(5, 0, -27));
 
     const ambientLight = new THREE.AmbientLight(
       new THREE.Color(23, 23, 23),
@@ -64,13 +64,32 @@ const HomeScene: React.FC = () => {
     renderer.autoClear = false;
     renderer.setClearColor(0x000000, 0.0);
 
-    let model: THREE.Object3D;
-    let mixer: THREE.AnimationMixer;
+    let roomModel: THREE.Object3D;
+    let roomMixer: THREE.AnimationMixer;
 
     loadGLB({ path: "newPortfolioScene.glb", scene })
       .then(({ model: loadedModel, mixer: loadedMixer }) => {
-        model = loadedModel;
-        mixer = loadedMixer;
+        roomModel = loadedModel;
+        roomMixer = loadedMixer;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    let textModel: THREE.Object3D;
+    let textMixer: THREE.AnimationMixer;
+
+    const directionalLight = new THREE.DirectionalLight(0x00aaaa, 0.4);
+    scene.add(directionalLight);
+    directionalLight.position.set(-10, 0, 5);
+
+    loadGLB({ path: "text.glb", scene })
+      .then(({ model: loadedModel, mixer: loadedMixer }) => {
+        textModel = loadedModel;
+        textMixer = loadedMixer;
+        textModel.position.x = -10;
+        textModel.position.z = -5;
+        directionalLight.target = textModel;
       })
       .catch((error) => {
         console.error(error);
@@ -95,8 +114,8 @@ const HomeScene: React.FC = () => {
 
     const starsGroup = createStarsBackground(scene);
 
-    const controls = new OrbitControls(camera, canvasRef.current);
-    controls.update();
+    /* const controls = new OrbitControls(camera, canvasRef.current);
+    controls.update(); */
 
     window.addEventListener(
       "resize",
@@ -113,13 +132,14 @@ const HomeScene: React.FC = () => {
 
     const animate = () => {
       requestAnimationFrame(animate);
-      if (!model || !mixer) return;
+      if (!roomModel || !roomMixer) return;
+      if (!textModel || !textMixer) return;
 
       sphere.rotation.y -= 0.0001;
       starsGroup.rotation.y -= 0.0004;
       starsGroup.rotation.z -= 0.0006;
 
-      mixer.update(clock.getDelta());
+      roomMixer.update(clock.getDelta());
 
       starsGroup.children.forEach((star) => {
         if (Math.random() > 0.995) {
