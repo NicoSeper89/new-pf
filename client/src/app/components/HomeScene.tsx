@@ -23,8 +23,25 @@ const HomeScene: React.FC = () => {
       1,
       1000
     );
-    camera.position.set(-8, 4, 16);
-    camera.lookAt(new THREE.Vector3(5, 0, -27));
+    camera.position.set(-12.5, 7, 20.5);
+
+    const controls = new OrbitControls(camera, canvasRef.current);
+    controls.target = new THREE.Vector3(-1.5,2, -5); 
+    
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.9
+    
+    controls.minPolarAngle = Math.PI / 2.5;
+    controls.maxPolarAngle = Math.PI / 2; 
+
+    controls.minAzimuthAngle = -Math.PI / 5;
+    controls.maxAzimuthAngle = -Math.PI / 18;    
+
+    controls.minDistance = 23;
+    controls.maxDistance = 30;
+
+    controls.enablePan = false;
+    
 
     const ambientLight = new THREE.AmbientLight(
       new THREE.Color(23, 23, 23),
@@ -79,7 +96,7 @@ const HomeScene: React.FC = () => {
     let textModel: THREE.Object3D;
     let textMixer: THREE.AnimationMixer;
 
-    const directionalLight = new THREE.DirectionalLight(0x00aaaa, 0.4);
+    const directionalLight = new THREE.DirectionalLight(0x00cc44, 0.2);
     scene.add(directionalLight);
     directionalLight.position.set(-10, 0, 5);
 
@@ -87,8 +104,7 @@ const HomeScene: React.FC = () => {
       .then(({ model: loadedModel, mixer: loadedMixer }) => {
         textModel = loadedModel;
         textMixer = loadedMixer;
-        textModel.position.x = -10;
-        textModel.position.z = -5;
+        textModel.position.set(-10.5, 0, -5);
         directionalLight.target = textModel;
       })
       .catch((error) => {
@@ -114,9 +130,6 @@ const HomeScene: React.FC = () => {
 
     const starsGroup = createStarsBackground(scene);
 
-    /* const controls = new OrbitControls(camera, canvasRef.current);
-    controls.update(); */
-
     window.addEventListener(
       "resize",
       () => {
@@ -139,6 +152,7 @@ const HomeScene: React.FC = () => {
       starsGroup.rotation.y -= 0.0004;
       starsGroup.rotation.z -= 0.0006;
 
+      controls.update();
       roomMixer.update(clock.getDelta());
 
       starsGroup.children.forEach((star) => {

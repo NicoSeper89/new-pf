@@ -9,7 +9,7 @@ export const createStarsBackground = (scene: THREE.Scene): THREE.Group => {
     transparent: true,
   });
   
-  const numStars = 5500;
+  const numStars = 2500;
   
   for (let i = 0; i < numStars; i++) {
     const theta = Math.random() * Math.PI * 2;
