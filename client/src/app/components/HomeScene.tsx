@@ -4,11 +4,7 @@ import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { loadGLB } from "../utils/GltfModel";
 import { createStarsBackground } from "../components/StarsBackground";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
-import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass";
+import { createScene } from "../config/Rendering3D";
 
 const HomeScene: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -16,71 +12,26 @@ const HomeScene: React.FC = () => {
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      45,
-      window.innerWidth / window.innerHeight,
-      1,
-      1000
-    );
-    camera.position.set(-12.5, 7, 20.5);
+    const { scene, renderer, camera, composer, controls} = createScene(canvasRef.current);
 
-    const controls = new OrbitControls(camera, canvasRef.current);
-    controls.target = new THREE.Vector3(-1.5,2, -5); 
-    
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.9
-    
-    controls.minPolarAngle = Math.PI / 2.5;
-    controls.maxPolarAngle = Math.PI / 2; 
-
-    controls.minAzimuthAngle = -Math.PI / 5;
-    controls.maxAzimuthAngle = -Math.PI / 18;    
-
-    controls.minDistance = 23;
-    controls.maxDistance = 30;
-
-    controls.enablePan = false;
-    
-
+    //ADD ENVIROMENT LIGHT
     const ambientLight = new THREE.AmbientLight(
       new THREE.Color(23, 23, 23),
       0.005
     );
     scene.add(ambientLight);
 
-    const roomLight = new THREE.PointLight(new THREE.Color(50, 50, 50), 0.2);
+    // Add light to room
+    const roomLight = new THREE.PointLight(new THREE.Color(50, 50, 50), 1);
     roomLight.position.set(1, 5, 1);
     roomLight.lookAt(3, 0, 3);
 
     scene.add(roomLight);
 
-    const texture = new THREE.TextureLoader().load("8k_stars.jpg");
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(3, 3);
+    //add background to scene.
+    const { sphere, starsGroup } = createStarsBackground(scene);
 
-    const geometry = new THREE.SphereGeometry(70, 64, 64);
-    const material = new THREE.MeshBasicMaterial({
-      map: texture,
-      side: THREE.BackSide,
-    });
-    const sphere = new THREE.Mesh(geometry, material);
-    scene.add(sphere);
-
-    const renderer = new THREE.WebGLRenderer({
-      canvas: canvasRef.current,
-      alpha: true,
-      antialias: true,
-      precision: "highp",
-    });
-    renderer.setPixelRatio(
-      window.devicePixelRatio ? window.devicePixelRatio : 1
-    );
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.autoClear = false;
-    renderer.setClearColor(0x000000, 0.0);
-
+    //Add room model to scene of home.
     let roomModel: THREE.Object3D;
     let roomMixer: THREE.AnimationMixer;
 
@@ -93,10 +44,11 @@ const HomeScene: React.FC = () => {
         console.error(error);
       });
 
+    //add text model to scene of home.
     let textModel: THREE.Object3D;
     let textMixer: THREE.AnimationMixer;
 
-    const directionalLight = new THREE.DirectionalLight(0x00cc44, 0.2);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.2);
     scene.add(directionalLight);
     directionalLight.position.set(-10, 0, 5);
 
@@ -110,25 +62,6 @@ const HomeScene: React.FC = () => {
       .catch((error) => {
         console.error(error);
       });
-
-    const renderScene = new RenderPass(scene, camera);
-    const bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(window.innerWidth, window.innerHeight),
-      0.2,
-      0,
-      0
-    );
-
-    renderer.toneMappingExposure = Math.pow(1, 4.0);
-
-    const outputPass = new OutputPass();
-
-    const composer = new EffectComposer(renderer);
-    composer.addPass(renderScene);
-    composer.addPass(bloomPass);
-    composer.addPass(outputPass);
-
-    const starsGroup = createStarsBackground(scene);
 
     window.addEventListener(
       "resize",
@@ -151,6 +84,11 @@ const HomeScene: React.FC = () => {
       sphere.rotation.y -= 0.0001;
       starsGroup.rotation.y -= 0.0004;
       starsGroup.rotation.z -= 0.0006;
+
+      const time = clock.getElapsedTime();
+
+      roomModel.position.y = Math.cos(time) * 0.3;
+      textModel.position.y = Math.cos(time) * 0.3;
 
       controls.update();
       roomMixer.update(clock.getDelta());

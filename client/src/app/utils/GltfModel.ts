@@ -29,9 +29,7 @@ export const loadGLB = ({ path, position, scene }: GLBLoadParams) => {
 
           resolve({ model, mixer });
         },
-        (xhr) => {
-          console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-        },
+        undefined,
         (error) => {
           console.error(error);
           reject(error);
