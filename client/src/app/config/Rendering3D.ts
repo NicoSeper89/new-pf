@@ -1,9 +1,5 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
-import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass";
 
 export const createScene = (
   canvasRef: HTMLCanvasElement
@@ -11,7 +7,6 @@ export const createScene = (
   scene: THREE.Scene;
   renderer: THREE.WebGLRenderer;
   camera: THREE.PerspectiveCamera;
-  composer: EffectComposer;
   controls: OrbitControls;
 } => {
   //START SCENE AND CAMERA.
@@ -56,21 +51,5 @@ export const createScene = (
 
   renderer.toneMappingExposure = 0;
 
-  const composer = new EffectComposer(renderer);
-
-  const renderScene = new RenderPass(scene, camera);
-  composer.addPass(renderScene);
-
-  const bloomPass = new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    0.2,
-    0.3,
-    0.5
-  );
-  composer.addPass(bloomPass);
-
-  const outputPass = new OutputPass();
-  composer.addPass(outputPass);
-
-  return { scene, renderer, camera, composer, controls };
+  return { scene, renderer, camera, controls };
 };

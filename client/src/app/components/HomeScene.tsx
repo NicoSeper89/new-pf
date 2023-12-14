@@ -12,7 +12,7 @@ const HomeScene: React.FC = () => {
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    const { scene, renderer, camera, composer, controls} = createScene(canvasRef.current);
+    const { scene, renderer, camera, controls} = createScene(canvasRef.current);
 
     //ADD ENVIROMENT LIGHT
     const ambientLight = new THREE.AmbientLight(
@@ -68,7 +68,6 @@ const HomeScene: React.FC = () => {
       () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-        composer.setSize(window.innerWidth, window.innerHeight);
         renderer.setSize(window.innerWidth, window.innerHeight);
       },
       false
@@ -98,7 +97,7 @@ const HomeScene: React.FC = () => {
           star.visible = !star.visible;
         }
       });
-      composer.render();
+      renderer.render(scene,camera);
     };
 
     animate();
