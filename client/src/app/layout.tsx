@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Mitr } from "next/font/google";
+import NavBar from "./components/NavBar";
 
 const mitr = Mitr({
   subsets: ["latin"],
@@ -21,8 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={mitr.className}>
-        <main className="relative flex h-screen w-screen flex-col items-center justify-start">
+        <main className="relative flex flex-col items-center justify-start w-[97vw]">
           {children}
+          <NavBar />
         </main>
       </body>
     </html>

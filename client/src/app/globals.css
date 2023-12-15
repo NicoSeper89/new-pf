@@ -4,9 +4,14 @@
 
 :root {
   --foreground-hsla: 0, 0%, 100%, 1;
-  --background-start-hsla: 0, 100%, 0%, 1;
-  --background-end-hsla: 0, 100%, 0%, 1;
+  --background-start-hsla: 0, 0%, 5%, 1;
+  --background-end-hsla: 0, 0%, 7%, 1;
   --background-indoor-hsla: 0, 0%, 12%, 1;
+}
+
+*{
+  padding: 0;
+  margin: 0;
 }
 
 body {

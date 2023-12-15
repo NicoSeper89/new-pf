@@ -1,16 +1,24 @@
+import GlitchText from "./components/GlitchText";
 import HomeScene from "./components/HomeScene";
 
 export default function Home() {
   return (
     <>
-      <div className="absolute flex items-center self-end justify-center gap-16 py-4 px-10 font-light text-[1.2rem]">
-        <div className=" py-2 px-6">HOME</div>
-        <div className=" py-2 px-6">SKILLS</div>
-        <div className=" py-2 px-6">PROJECT</div>
-        <div className=" py-2 px-6">ABOUT ME</div>
-        <div className=" py-2 px-6">CONTACT</div>
+      <div id="Home" className="relative h-[98vh] p-0">
+        <HomeScene />
       </div>
-      <HomeScene />
+      <div id="Skills" className="bg-[#192260] h-screen w-[100.5vw]">
+        
+      </div>
+      <div id="Project" className="inline-block bg-[#0E0E0E] h-screen w-[100.5vw]">
+        
+      </div>
+      <div id="AboutMe" className="inline-block bg-[#0055AA] h-screen w-[100.5vw]">
+        
+      </div>
+      <div id="Contact" className="inline-block bg-[#0E0E0E] h-screen w-[100.5vw]">
+        
+      </div>
     </>
   );
 }
