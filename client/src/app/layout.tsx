@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={mitr.className}>
-        <main className="relative flex flex-col items-center justify-start w-[97vw]">
+        <main className="relative flex flex-col overflow-hidden">
           {children}
           <NavBar />
         </main>

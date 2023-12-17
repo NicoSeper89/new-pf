@@ -65,7 +65,7 @@ const HomeScene: React.FC = () => {
 
   return (
     <>
-      <canvas ref={canvasRef}></canvas>
+      <canvas className="absolute" ref={canvasRef}></canvas>
     </>
   );
 };
