@@ -18,7 +18,7 @@ const NavBar = () => {
 
   return (
     <AnimatePresence>
-      <nav className="fixed p-4 flex justify-center items-center gap-12 bg-gray-950 bg-opacity-75 w-full">
+      <nav className="fixed p-4 flex justify-center items-center gap-12 w-full">
         {navbarItems.map((item, index) => (
           <motion.a
             key={index}

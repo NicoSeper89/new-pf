@@ -8,55 +8,31 @@ interface Props extends MotionProps {
 }
 
 const variantsGlitch = {
-  static: {
-    textShadow: "0 0 0 #ffffff",
+  noGlitch: (i: number) => ({
     x: 0,
     y: 0,
-  },
-  animate: {
+    textShadow: "0px 0px 0px #fff",
+    transition: {
+      duration: 0.6,
+    },
+  }),
+  glitch: () => ({
     textShadow: [
-      "0.05em 0 0 #ff0000, -0.03em -0.04em 0 #0000ff, 0.025em 0.04em 0 #00ff00",
-      "0.05em 0 0 #ff0000, -0.03em -0.04em 0 #0000ff, 0.025em 0.04em 0 #00ff00",
-      "-0.05em -0.025em 0 #ff0000, 0.025em 0.035em 0 #0000ff, -0.05em -0.05em 0 #00ff00",
-      "-0.05em -0.025em 0 #ff0000, 0.025em 0.035em 0 #0000ff, -0.05em -0.05em 0 #00ff00",
-      "0.05em 0.035em 0 #ff0000, 0.03em 0 0 #0000ff, 0 -0.04em 0 #00ff00",
-      "0.05em 0.035em 0 #ff0000, 0.03em 0 0 #0000ff, 0 -0.04em 0 #00ff00",
-      "0.05em 0 0 #ff0000, -0.03em -0.04em 0 #0000ff, 0.025em 0.04em 0 #00ff00",
-      "0.05em 0 0 #ff0000, -0.03em -0.04em 0 #0000ff, 0.025em 0.04em 0 #00ff00",
-      "0.05em 0.035em 0 #ff0000, 0.03em 0 0 #0000ff, 0 -0.04em 0 #00ff00",
-      "0.05em 0.035em 0 #ff0000, 0.03em 0 0 #0000ff, 0 -0.04em 0 #00ff00",
-      "-0.05em 0 0 #ff0000, -0.025em -0.04em 0 #0000ff, -0.04em -0.025em 0 #00ff00",
-      "0 0 #ffffff",
-      "0 0 #ffffff",
+      "4px 0px 0 #ff0000, -3px -2px 0 #0000ff, -2px 0px 0 #00ff00",
+      "-3px -2px 0 #00ff00, -2px 4px 0 #ff0000, 2px 1px 0 #0000ff",
+      "4px -3px 0 #0000ff, -3px 3px 0 #00ff00, -2px 3px 0 #ff0000",
+      "-2px -2px 0 #ff0000, -3px -4px 0 #0000ff, 0px 0px 0 #00ff00",
+      "-1px 0px 0 #00ff00, 0px -1px 0 #ff0000, -2px 0px 0 #0000ff",
+      "1px 0px 0 #0000ff, -1px -1px 0 #00ff00, -1px 1px 0 #ff0000",
+      "0px 0px 0px #ffffff",
     ],
-    x: ["-0.1rem", "0.1rem", "-0.2rem", "0rem", "-0.1rem", "0rem"],
-    y: ["-0.1rem", "0.1rem", "-0.2rem", "0rem", "-0.1rem", "0rem"],
+    x: [-1, 2, -2, 0, 1, -1, 0],
+    y: [1, -2, -1, 1, 0, 1, 0],
     transition: {
       repeat: Infinity,
-      times: [0, 0.15, 0.16, 0.49, 0.5, 0.98, 0.99, 1],
-      duration: 0.1,
+      duration: 0.3,
     },
-  },
-};
-
-const variantsGlitchLine = {
-  hidden: {
-    x: 0,
-    y: 0,
-    opacity: 0,
-    width: "100%",
-  },
-  hover: {
-    opacity: [1, 0, 0, 1, 0, 1, 0, 1, 0],
-    x: ["-0rem", "0.7rem", "-0.2rem", "-0.7rem", "0.8rem", "0rem"],
-    y: ["-0rem", "-0.3rem", "-0.1em", "0.6rem", "-0.2rem", "0rem"],
-    width: ["10px", "20px", "50px", "10px", "40px", "10px"],
-    backgroundColor: ["#fff", "#000", "#fff", "#000", "#fff", "#000"],
-    transition: {
-      repeat: 2,
-      duration: 0.2,
-    },
-  },
+  }),
 };
 
 const NameWithGlitch: React.FC<Props> = ({ text, ...props }) => {
@@ -66,32 +42,38 @@ const NameWithGlitch: React.FC<Props> = ({ text, ...props }) => {
     <motion.div className="relative inline-flex items-end text-7xl cursor-pointer font-mono">
       {text.split("").map((letter, index) => {
         return letter !== " " ? (
-          <div key={index} className="relative flex items-center justify-center ">
+          <div
+            key={index}
+            className="relative flex items-center justify-center"
+          >
             <motion.span
+              custom={index}
               variants={variantsGlitch}
-              initial="static"
-              animate={activeEffects[index] ? "animate" : "static"}
-              onClick={() => {
+              animate={activeEffects[index] ? "glitch" : "noGlitch"}
+              onHoverStart={() => {
                 setActiveEffects((prev) => {
-                  
-                 const prevEffects = [...prev]
+                  const prevEffects = [...prev];
+                  prevEffects[index] = true;
 
-                 prevEffects[index] = !prevEffects[index];
-
-                return prevEffects;
+                  return prevEffects;
                 });
               }}
-              className="leading-none"
+              onHoverEnd={() => {
+                setTimeout(() => {
+                  setActiveEffects((prev) => {
+                    const arr = [...prev];
+
+                    arr[index] = false;
+
+                    return arr;
+                  });
+                }, 3000);
+              }}
+              transition={{ease: "easeIn"}}
               {...props}
             >
               {letter}
             </motion.span>
-            <motion.div
-              variants={variantsGlitchLine}
-              initial="hidden"
-              animate={activeEffects[index] ? "hover" : "hidden"}
-              className="absolute block h-[2px] w-2 bg-white"
-            />
           </div>
         ) : (
           <motion.div key={index} className="flex w-8" />
