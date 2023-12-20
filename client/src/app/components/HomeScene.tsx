@@ -4,6 +4,7 @@ import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { loadGLB } from "../utils/GltfModel";
 import { createScene } from "../config/Rendering3D";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const HomeScene: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -45,19 +46,55 @@ const HomeScene: React.FC = () => {
 
     const clock = new THREE.Clock();
 
+    const spheres = new THREE.Group();
+
+    const octahedronGeometry = new THREE.OctahedronGeometry();
+    const wireframeGeometry = new THREE.WireframeGeometry(octahedronGeometry);
+    const material = new THREE.LineBasicMaterial({ color:  0x1f1f1f, opacity: 0.6, transparent: true });
+
+
+    for (let i = 0; i < 1000; i++) {
+
+      const wireframe = new THREE.LineSegments(wireframeGeometry, material);
+
+      wireframe.position.y = Math.random() * 150 - 100;
+      wireframe.scale.x =
+        wireframe.scale.y =
+        wireframe.scale.z =
+          Math.random() * 4;
+
+      spheres.add(wireframe);
+    }
+
+    spheres.rotation.y = 0.2;
+    scene.add(spheres);
+
+    /* const controls = new OrbitControls(camera, renderer.domElement); */
+
     const animate = () => {
       requestAnimationFrame(animate);
       if (!roomModel || !roomMixer) return;
 
       const time = clock.getElapsedTime();
-
+      /*   controls.update(); */
       roomModel.position.y = Math.cos(time) * 0.3;
       roomModel.rotation.z = Math.cos(time * 0.5) * 0.1;
       roomModel.rotation.x = Math.cos(time * 0.1) * 0.1;
 
+      for (let i = 0, il = spheres.children.length; i < il; i++) {
+        const sphere = spheres.children[i];
+
+        sphere.position.x = 100 * Math.cos(0.01 * time + i) + 115;
+        sphere.position.z = 100 * Math.sin(0.01 * time + i * 1.1) - 115;
+
+        sphere.rotation.z += 0.01;
+        sphere.rotation.x += 0.01;
+        sphere.rotation.y += 0.01;
+      }
+
       roomMixer.update(clock.getDelta());
 
-      renderer.render(scene,camera);
+      renderer.render(scene, camera);
     };
 
     animate();
