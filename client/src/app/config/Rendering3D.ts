@@ -15,8 +15,6 @@ export const createScene = (
     1,
     1000
   );
-  camera.position.set(-12, 3, 12);
-  camera.lookAt(-4,2,0)
 
   //Start renderer and config.
   const renderer = new THREE.WebGLRenderer({

@@ -1,6 +1,7 @@
 import HomeScene from "./components/HomeScene";
 import NameWithGlitch from "./components/NameWithGlitch";
 import SVGIcon from "./utils/SVGIcon";
+import Carousel from "./components/Carousel";
 
 export default function Home() {
   return (
@@ -39,7 +40,9 @@ export default function Home() {
           />
         </div>
       </div>
-      <div id="Skills" className="h-screen"></div>
+      <div id="Skills" className="relative h-screen bg-red-600 flex flex-col justify-center items-center overflow-hidden">
+        <Carousel cards={[]}/>
+      </div>
       <div
         id="Project"
         className="inline-block h-screen w-[100vw]"

@@ -14,6 +14,9 @@ const HomeScene: React.FC = () => {
 
     const { scene, renderer, camera } = createScene(canvasRef.current);
 
+    camera.position.set(-12, 3, 12);
+    camera.lookAt(-4, 2, 0);
+
     // Add light to room
     const roomLight = new THREE.PointLight(new THREE.Color(50, 50, 50), 1);
     roomLight.position.set(1, 5, 1);
@@ -50,11 +53,13 @@ const HomeScene: React.FC = () => {
 
     const octahedronGeometry = new THREE.OctahedronGeometry();
     const wireframeGeometry = new THREE.WireframeGeometry(octahedronGeometry);
-    const material = new THREE.LineBasicMaterial({ color:  0x1f1f1f, opacity: 0.6, transparent: true });
-
+    const material = new THREE.LineBasicMaterial({
+      color: 0x1f1f1f,
+      opacity: 0.6,
+      transparent: true,
+    });
 
     for (let i = 0; i < 1000; i++) {
-
       const wireframe = new THREE.LineSegments(wireframeGeometry, material);
 
       wireframe.position.y = Math.random() * 150 - 100;
