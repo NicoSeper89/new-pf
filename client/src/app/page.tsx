@@ -40,8 +40,8 @@ export default function Home() {
           />
         </div>
       </div>
-      <div id="Skills" className="relative h-screen bg-red-600 flex flex-col justify-center items-center overflow-hidden">
-        <Carousel cards={[]}/>
+      <div id="Skills" className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
+        <Carousel />
       </div>
       <div
         id="Project"
