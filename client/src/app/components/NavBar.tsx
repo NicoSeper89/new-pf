@@ -37,7 +37,7 @@ const NavBar = () => {
               });
             }}
           >
-            <motion.span className="font-mono text-white">
+            <motion.span className="text-white">
               {item.text}
             </motion.span>
             {index === selectedLink ? (
