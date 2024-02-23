@@ -1,7 +1,7 @@
 import CardsContainer from "./CardsContainer";
 
 async function getAllProjects() {
-  const res = await fetch('http://localhost:8080/api/projects')
+  const res = await fetch('http://localhost:8080/api/projects', {cache: "no-cache"})
  
   if (!res.ok) {
     return [];
