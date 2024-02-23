@@ -1,33 +1,24 @@
 import CardsContainer from "./CardsContainer";
 
 async function getAllProjects() {
-  const res = await fetch('http://localhost:8080/api/projects', {cache: "no-cache"})
- 
+  const res = await fetch("http://localhost:8080/api/projects", {
+    cache: "no-cache",
+  });
+
   if (!res.ok) {
     return [];
   }
- 
-  return res.json()
+
+  return res.json();
 }
 
 const Carousel: React.FC = async () => {
-
-  const response = await getAllProjects()
+  const response = await getAllProjects();
 
   return (
-    <>
+    <div className="flex flex-col w-11/12 h-[75vh] justify-between">
       <CardsContainer cards={response.data} />
-      <div className="absolute bg-green-500 self-start left-10 p-2 rounded-lg">
-        <button>
-          Prev
-        </button>
-      </div>
-      <div className="absolute bg-red-500 self-end right-10 p-2 rounded-lg">
-        <button>
-          Next
-        </button>
-      </div>
-    </>
+    </div>
   );
 };
 
