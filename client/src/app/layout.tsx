@@ -1,12 +1,12 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Mitr } from "next/font/google";
+import { Comfortaa } from "next/font/google";
 import NavBar from "./components/NavBar";
 
-const mitr = Mitr({
+const comfortaa = Comfortaa({
   subsets: ["latin"],
   display: "swap",
-  weight: ["200", "400", "500", "700"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={mitr.className}>
+      <body className={comfortaa.className}>
         <main className="relative flex flex-col overflow-hidden">
           {children}
           <NavBar />

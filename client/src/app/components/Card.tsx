@@ -1,13 +1,12 @@
 import { MotionProps, motion } from "framer-motion";
-import { CardInfo } from "./CardsContainer";
+import { Project } from "./CardsContainer";
 
 export interface Props extends MotionProps {
-  data: CardInfo;
+  data: Project;
   isClicked: Boolean;
 }
 
 const Card: React.FC<Props> = ({ data, isClicked }) => {
-  const img = "data:image/png;base64," + data.image;
 
   return (
     <motion.div className="flex flex-col justify-center items-center h-full w-full box-border overflow-hidden"
@@ -18,7 +17,7 @@ const Card: React.FC<Props> = ({ data, isClicked }) => {
         height={101}
         fill="#ccc"
         version="1.1"
-        className="flex justify-center items-center z-10 text-center"
+        className="flex justify-center items-center z-10 text-center scale-[0.6]"
       >
         <motion.path
           fillRule="evenodd"

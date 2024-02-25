@@ -15,11 +15,7 @@ async function getAllProjects() {
 const Carousel: React.FC = async () => {
   const response = await getAllProjects();
 
-  return (
-    <div className="flex flex-col w-11/12 h-[75vh] justify-between">
-      <CardsContainer cards={response.data} />
-    </div>
-  );
+  return <CardsContainer cards={response.data} />;
 };
 
 export default Carousel;
