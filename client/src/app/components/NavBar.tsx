@@ -5,11 +5,11 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const NavBar = () => {
   const navbarItems = [
-    { text: "Home", link: "#Home", color: "#0c0" },
-    { text: "Skills", link: "#Skills", color: "#1155dd" },
-    { text: "Project", link: "#Project", color: "#cc0" },
-    { text: "AboutMe", link: "#AboutMe", color: "#0055AA" },
-    { text: "Contact", link: "#Contact", color: "#33FFFF" },
+    { text: "Home", link: "#Home", color: "#33CC99" },
+    { text: "Skills", link: "#Skills", color: "#EFFA20" },
+    { text: "Project", link: "#Project", color: "#D41E79" },
+    { text: "About me", link: "#AboutMe", color: "#9347DE" },
+    { text: "Contact", link: "#Contact", color: "#3B82F6" },
   ];
 
   const [selectedLink, setSelectedLink] = useState(0);
