@@ -2,6 +2,7 @@ import HomeScene from "./components/HomeScene";
 import NameWithGlitch from "./components/NameWithGlitch";
 import SVGIcon from "./utils/SVGIcon";
 import Carousel from "./components/Carousel";
+import ContactForm from "./components/ContactForm";
 
 export default function Home() {
   return (
@@ -41,20 +42,24 @@ export default function Home() {
         </div>
       </div>
       <div id="Skills" className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
-        <Carousel />
+        
       </div>
       <div
         id="Project"
-        className="inline-block h-screen w-[100vw]"
-      ></div>
+        className="relative h-screen flex flex-col justify-center items-center overflow-hidden"
+      >
+        <Carousel />
+      </div>
       <div
         id="AboutMe"
         className="inline-block h-screen w-[100vw]"
       ></div>
       <div
         id="Contact"
-        className="inline-block h-screen w-[100vw]"
-      ></div>
+        className="relative h-screen flex flex-col justify-center items-center overflow-hidden"
+      >
+        <ContactForm />
+      </div>
     </>
   );
 }
