@@ -44,17 +44,12 @@ const CardsContainer: React.FC<Props> = ({ cards }) => {
   };
 
   return (
-    <div className="flex items-start relative box-border w-screen h-full bg-zinc-900 pt-16">
-      <div className="flex justify-center relative h-[92%] w-7/12 overflow-hidden bg-zinc-800 rounded-r-3xl bg-opacity-75">
-        <div className="flex flex-col justify-between items-end w-11/12 h-full pt-10 pb-4">
-          <ProjectInfo project={cards[selectedCardIndex]} />
-        </div>
-      </div>
+    <div className="flex items-start relative box-border w-screen h-full pt-20 bg-gradient-to-tr from-[#1f1f1f22] from-35% to-[#2b2b2b9d]">
       <AnimatePresence>
-        <div className="flex flex-wrap w-5/12 justify-center items-start overflow-hidden pt-6 gap-2">
+        <div className="flex flex-wrap w-5/12 justify-center items-start overflow-hidden gap-4">
           {cards.map((card, index) => (
             <motion.div
-              className={`flex relative bg-gradient-to-tr from-[#25252575] from-35% to-[#5e5e5e75] p-7`}
+              className={`flex relative bg-zinc-800 p-7 rounded-md`}
               onClick={() => handleClick(index)}
               key={index}
               variants={variantsBox}
@@ -65,6 +60,13 @@ const CardsContainer: React.FC<Props> = ({ cards }) => {
           ))}
         </div>
       </AnimatePresence>
+      <div
+        className="flex justify-center relative h-[92%] w-7/12 overflow-hidden bg-zinc-800 rounded-l-xl bg-opacity-75"
+      >
+        <div className="flex flex-col justify-between items-end w-11/12 h-full pt-10 pb-4">
+          <ProjectInfo project={cards[selectedCardIndex]} />
+        </div>
+      </div>
     </div>
   );
 };

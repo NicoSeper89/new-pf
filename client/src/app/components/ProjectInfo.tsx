@@ -10,7 +10,7 @@ const ProjectInfo: React.FC<Props> = ({ project }) => {
   return (
     <div className="flex flex-col gap-3 text-[#999] ">
       <div className="flex justify-between text-3xl items-start">
-        <span className={`text-6xl font-black`} style={{color: project.hex_color}}>
+        <span className={`text-6xl font-light`}>
           {project.name.toUpperCase()}
         </span>
         <Link href={project.repository_link} target="_blank">

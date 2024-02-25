@@ -17,12 +17,12 @@ const Card: React.FC<Props> = ({ data, isClicked }) => {
         height={101}
         fill="#ccc"
         version="1.1"
-        className="flex justify-center items-center z-10 text-center scale-[0.6]"
+        className="flex justify-center items-center z-10 text-center scale-[0.9]"
       >
         <motion.path
           fillRule="evenodd"
           d={data.svg_path}
-          fill={(!isClicked ? "#cccccc" : data.hex_color) + "70"}
+          fill={(!isClicked ? "#cccccc70" : data.hex_color)}
           clipRule="evenodd"
         />
       </motion.svg>
