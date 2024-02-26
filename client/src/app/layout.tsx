@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${comfortaa.variable} ${local_font.variable}`}>
-        <main className="relative flex flex-col overflow-hidden font-local">
+        <main className="relative flex flex-col overflow-hidden font-comfortaa">
           {children}
           <NavBar />
         </main>

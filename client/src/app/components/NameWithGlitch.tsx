@@ -39,7 +39,7 @@ const NameWithGlitch: React.FC<Props> = ({ text, ...props }) => {
   const [activeEffects, setActiveEffects] = useState<Boolean[]>([]);
 
   return (
-    <motion.div className="relative inline-flex items-end text-7xl cursor-pointer ">
+    <motion.div className="relative inline-flex items-end text-7xl cursor-pointer font-local">
       {text.split("").map((letter, index) => {
         return letter !== " " ? (
           <div
