@@ -8,7 +8,7 @@ interface Props {
 
 const ProjectInfo: React.FC<Props> = ({ project }) => {
   return (
-    <div className="flex flex-col gap-3 text-[#999] ">
+    <div className="flex flex-col gap-3">
       <div className="flex justify-between text-3xl items-start">
         <span className={`text-6xl font-light`}>
           {project.name.toUpperCase()}
@@ -22,7 +22,7 @@ const ProjectInfo: React.FC<Props> = ({ project }) => {
         <span>{project.organization}</span>
         <span>{project.date.slice(0, 4)}</span>
       </div>
-      <p className="text-justify text-sm font-semibold text-[#999] italic py-5">
+      <p className="text-justify text-sm font-semibold italic py-5">
         {project.description}
       </p>
     </div>

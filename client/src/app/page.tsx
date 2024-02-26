@@ -3,6 +3,8 @@ import NameWithGlitch from "./components/NameWithGlitch";
 import SVGIcon from "./utils/SVGIcon";
 import Carousel from "./components/Carousel";
 import ContactForm from "./components/ContactForm";
+import AboutMe from "./components/AboutMe";
+import Skills from "./components/Skills";
 
 export default function Home() {
   return (
@@ -41,8 +43,8 @@ export default function Home() {
           />
         </div>
       </div>
-      <div id="Skills" className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
-        
+      <div id="Skills" className="relative h-screen overflow-hidden box-border">
+            <Skills />
       </div>
       <div
         id="Project"
@@ -52,8 +54,10 @@ export default function Home() {
       </div>
       <div
         id="AboutMe"
-        className="inline-block h-screen w-[100vw]"
-      ></div>
+        className="relative h-screen overflow-hidden box-border"
+      >
+        <AboutMe />
+      </div>
       <div
         id="Contact"
         className="relative h-screen flex flex-col justify-center items-center overflow-hidden"
