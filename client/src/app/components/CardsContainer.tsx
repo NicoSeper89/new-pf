@@ -44,7 +44,7 @@ const CardsContainer: React.FC<Props> = ({ cards }) => {
   };
 
   return (
-    <div className="flex items-start relative box-border w-screen h-full pt-20 bg-gradient-to-tr from-[#1f1f1f22] from-35% to-[#2b2b2b9d]">
+    <div className="flex items-start relative box-border w-screen h-full pt-20">
       <AnimatePresence>
         <div className="flex flex-wrap w-5/12 justify-center items-start overflow-hidden gap-4">
           {cards.map((card, index) => (
