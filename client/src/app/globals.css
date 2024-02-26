@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --foreground-hsla: 0, 0%, 100%, 1;
+  --foreground-hsla: 0, 0%, 79%, 1;
   --background-start-hsla: 0, 0%, 5%, 1;
   --background-end-hsla: 0, 0%, 7%, 1;
   --background-indoor-hsla: 0, 0%, 12%, 1;

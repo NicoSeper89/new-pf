@@ -1,12 +1,19 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { Comfortaa } from "next/font/google";
 import NavBar from "./components/NavBar";
+
+const local_font = localFont({
+  src: "../../public/fonts/Gameplay.ttf",
+  variable: "--font-local",
+});
 
 const comfortaa = Comfortaa({
   subsets: ["latin"],
   display: "swap",
   weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-comfortaa",
 });
 
 export const metadata: Metadata = {
@@ -21,8 +28,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={comfortaa.className}>
-        <main className="relative flex flex-col overflow-hidden">
+      <body className={`${comfortaa.variable} ${local_font.variable}`}>
+        <main className="relative flex flex-col overflow-hidden font-local">
           {children}
           <NavBar />
         </main>
