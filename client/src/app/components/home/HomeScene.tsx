@@ -2,8 +2,8 @@
 
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
-import { loadGLB } from "../utils/GltfModel";
-import { createScene } from "../config/Rendering3D";
+import { loadGLB } from "../../utils/GltfModel";
+import { createScene } from "../../utils/Rendering3D";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const HomeScene: React.FC = () => {

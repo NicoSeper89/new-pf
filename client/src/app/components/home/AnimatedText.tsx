@@ -35,9 +35,10 @@ const variantsGlitch = {
   }),
 };
 
-const NameWithGlitch: React.FC<Props> = ({ text, ...props }) => {
+const AnimatedText: React.FC<Props> = ({ text, ...props }) => {
   const [activeEffects, setActiveEffects] = useState<Boolean[]>([]);
 
+  
   return (
     <motion.div className="relative inline-flex items-end text-7xl cursor-pointer font-local">
       {text.split("").map((letter, index) => {
@@ -83,4 +84,4 @@ const NameWithGlitch: React.FC<Props> = ({ text, ...props }) => {
   );
 };
 
-export default NameWithGlitch;
+export default AnimatedText;

@@ -12,10 +12,14 @@ async function getAllProjects() {
   return res.json();
 }
 
-const Carousel: React.FC = async () => {
+const Projects: React.FC = async () => {
   const response = await getAllProjects();
 
-  return <CardsContainer cards={response.data} />;
+  return (
+    <>
+      <CardsContainer cards={response.data} />
+    </>
+  );
 };
 
-export default Carousel;
+export default Projects;

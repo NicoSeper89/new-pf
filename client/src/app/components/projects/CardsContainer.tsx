@@ -49,7 +49,7 @@ const CardsContainer: React.FC<Props> = ({ cards }) => {
         <div className="flex flex-wrap w-5/12 justify-center items-start overflow-hidden gap-4">
           {cards.map((card, index) => (
             <motion.div
-              className={`flex relative bg-zinc-800 p-7 rounded-md`}
+              className={`flex relative bg-[${index == selectedCardIndex?"#1f1f1f": "#141416"}] p-7 rounded-md`}
               onClick={() => handleClick(index)}
               key={index}
               variants={variantsBox}
@@ -61,7 +61,7 @@ const CardsContainer: React.FC<Props> = ({ cards }) => {
         </div>
       </AnimatePresence>
       <div
-        className="flex justify-center relative h-[92%] w-7/12 overflow-hidden bg-zinc-800 rounded-l-xl bg-opacity-75"
+        className="flex justify-center relative h-[92%] w-7/12 overflow-hidden bg-[#1f1f1f] rounded-l-xl bg-opacity-75"
       >
         <div className="flex flex-col justify-between items-end w-11/12 h-full pt-10 pb-4">
           <ProjectInfo project={cards[selectedCardIndex]} />
