@@ -11,12 +11,13 @@ const variantsGlitch = {
   noGlitch: (i: number) => ({
     x: 0,
     y: 0,
-    textShadow: "0px 0px 0px #fff",
+    textShadow: "0.3rem 0.3rem 0px #000000",
+    opacity: 1,
     transition: {
       duration: 0.6,
     },
   }),
-  glitch: () => ({
+  glitch: () => ({opacity: .5,
     textShadow: [
       "4px 0px 0 #ff0000, -3px -2px 0 #0000ff, -2px 0px 0 #00ff00",
       "-3px -2px 0 #00ff00, -2px 4px 0 #ff0000, 2px 1px 0 #0000ff",
